@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.1.0/schema.json",
+  "name": "7320d343dab12e05e4e8",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 2000,
+    "height": 587.47720364741645,
+    "width": 574.83282674772045,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Empires"
+                    }
+                  },
+                  "Property": "Empire"
+                }
+              },
+              "queryRef": "Empires.Empire",
+              "nativeQueryRef": "Empire"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.1.0/schema.json",
+  "name": "e50b6e2027bb54c51583",
+  "position": {
+    "x": 553.72687224669608,
+    "y": 59.770925110132161,
+    "z": 1000,
+    "height": 625.90308370044056,
+    "width": 390.20264317180619,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "EmpiresToMilleniums"
+                    }
+                  },
+                  "Property": "GeoHistoryKey"
+                }
+              },
+              "queryRef": "EmpiresToMilleniums.GeoHistoryKey",
+              "nativeQueryRef": "GeoHistoryKey"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "248.94713656387665D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "EmpiresToMilleniums.GeoHistoryKey"
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

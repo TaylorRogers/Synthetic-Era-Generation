@@ -1,0 +1,162 @@
+table ModernCountry
+	lineageTag: 2ac501e9-d889-4b85-8082-a79632b6b16e
+
+	column CountryName
+		dataType: string
+		lineageTag: 017752e0-9335-4724-8eff-81f6317dadcc
+		summarizeBy: none
+		sourceColumn: CountryName
+
+		annotation SummarizationSetBy = Automatic
+
+	column alpha-2
+		dataType: string
+		lineageTag: 1d3ab632-4e35-42f5-8d06-6f92f554e76a
+		summarizeBy: none
+		sourceColumn: alpha-2
+
+		annotation SummarizationSetBy = Automatic
+
+	column alpha-3
+		dataType: string
+		lineageTag: 78f29991-71a5-462e-be7c-d8f979cedd77
+		summarizeBy: none
+		sourceColumn: alpha-3
+
+		annotation SummarizationSetBy = Automatic
+
+	column CountryCode
+		dataType: string
+		lineageTag: 4e860f5e-89d0-4be0-b6c4-3ac2d34e63ea
+		summarizeBy: none
+		sourceColumn: CountryCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column iso_3166-2
+		dataType: string
+		lineageTag: 7beeeb67-9781-4093-8e75-96219a3a6f72
+		summarizeBy: none
+		sourceColumn: iso_3166-2
+
+		annotation SummarizationSetBy = Automatic
+
+	column region
+		dataType: string
+		lineageTag: 6d741898-d185-40bd-840c-03ef5b0662b7
+		summarizeBy: none
+		sourceColumn: region
+
+		annotation SummarizationSetBy = Automatic
+
+	column sub-region
+		dataType: string
+		lineageTag: bf4a3220-f8c8-462c-8b30-3cdb4369fb66
+		summarizeBy: none
+		sourceColumn: sub-region
+
+		annotation SummarizationSetBy = Automatic
+
+	column intermediate-region
+		dataType: string
+		lineageTag: 57381b4f-d664-4901-a109-86730ec18b7e
+		summarizeBy: none
+		sourceColumn: intermediate-region
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ModernCountry = m
+		mode: import
+		source =
+				let
+				    ExcludeCountryCodes = {
+				        "BV", // Bouvet Island
+				        "HM", // Heard Island and McDonald Islands
+				        "UM", // United States Minor Outlying Islands
+				        "TF", // French Southern Territories
+				        "GS", // South Georgia and the South Sandwich Islands
+				        "AQ", // Antarctica
+				        "PN", // Pitcairn
+				        "TK", // Tokelau
+				        "NU", // Niue
+				        "CK", // Cook Islands
+				        "SJ", // Svalbard and Jan Mayen
+				        "NF", // Norfolk Island
+				        "CX", // Christmas Island
+				        "CC", // Cocos (Keeling) Islands
+				        "PM", // Saint Pierre and Miquelon
+				        "YT", // Mayotte
+				        "BL", // Saint Barthélemy
+				        "MF", // Saint Martin (French part)
+				        "SH", // Saint Helena, Ascension and Tristan da Cunha
+				        "WF", // Wallis and Futuna
+				        "BM", // Bermuda
+				        "KY", // Cayman Islands
+				        "FK", // Falkland Islands
+				        "MS", // Montserrat
+				        "AI", // Anguilla
+				        "AW", // Aruba
+				        "BQ", // Bonaire, Sint Eustatius and Saba
+				        "VG", // British Virgin Islands
+				        "VI", // U.S. Virgin Islands
+				        "CW", // Curaçao
+				        "SX", // Sint Maarten
+				        "GP", // Guadeloupe
+				        "MQ", // Martinique
+				        "KN", // Saint Kitts and Nevis
+				        "LC", // Saint Lucia
+				        "VC", // Saint Vincent and the Grenadines
+				        "GD", // Grenada
+				        "DM", // Dominica
+				        "AG", // Antigua and Barbuda
+				        "BS", // Bahamas
+				        "TC", // Turks and Caicos Islands
+				        "BB", // Barbados
+				        "NR", // Nauru
+				        "TV", // Tuvalu
+				        "PW", // Palau
+				        "MH", // Marshall Islands
+				        "FM", // Micronesia, Federated States of
+				        "VU", // Vanuatu
+				        "KI", // Kiribati
+				        "FO", // Faroe Islands
+				        "AX", // Åland Islands
+				        "GI", // Gibraltar
+				        "JE", // Jersey
+				        "GG", // Guernsey
+				        "IM", // Isle of Man
+				        "LU", // Luxembourg
+				        "MC", // Monaco
+				        "LI", // Liechtenstein
+				        "SM", // San Marino
+				        "VA", // Vatican City
+				        "AD", // Andorra
+				        "RE", // Réunion
+				        "NC"  // New Caledonia
+				    },
+				
+				    Source = Csv.Document(Web.Contents("https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.csv"), [Delimiter=",", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				
+				    FixedRows = Table.FromRecords(
+				        List.Transform(
+				            Table.ToRecords(PromotedHeaders),
+				            (row) =>
+				                if row[#"country-code"] = "010" then
+				                    Record.TransformFields(row, {{"region", each "Antarctica"}, {"sub-region", each "Antarctica"}})
+				                else if row[#"country-code"] = "158" then
+				                    Record.TransformFields(row, {{"region", each "Asia"}, {"sub-region", each "Eastern Asia"}})
+				                else
+				                    row
+				        )
+				    ),
+				
+				    FilteredRows = Table.SelectRows(FixedRows, each true),
+				    #"Renamed Columns" = Table.RenameColumns(FilteredRows,{{"country-code", "CountryCode"}, {"name", "CountryName"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

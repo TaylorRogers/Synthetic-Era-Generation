@@ -1,0 +1,151 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 3.7710622292623275,
+        "y": 294.14285388246157
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 776.356530656667,
+            "y": 592.28259140260059
+          },
+          "nodeIndex": "Empires",
+          "nodeLineageTag": "8d087cb7-fa5f-4b0e-be6f-d56aa2cff861",
+          "size": {
+            "height": 209,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "nodeIndex": "Eras",
+          "nodeLineageTag": "b28d9a9f-2d72-4d17-9248-872147810176",
+          "size": {
+            "height": 265.33699566819735,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 900,
+            "y": 15.451171875
+          },
+          "nodeIndex": "Sources",
+          "nodeLineageTag": "a4ba6e4a-49e4-465d-a194-816f862bf8eb",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 947.50821575741156
+          },
+          "nodeIndex": "ModernCountry",
+          "nodeLineageTag": "2ac501e9-d889-4b85-8082-a79632b6b16e",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 328.74026998845835
+          },
+          "nodeIndex": "Milleniums",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 549.85164120385787
+          },
+          "nodeIndex": "GeoHistory",
+          "nodeLineageTag": "8c41bf8a-d88c-49ce-ab43-3590a62b56c3",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 1224.506097551782,
+            "y": 889.733236062737
+          },
+          "nodeIndex": "Empire_Country Codes_Bridge",
+          "nodeLineageTag": "cbd8fb89-59df-4541-8b1c-ffde47693f05",
+          "size": {
+            "height": 200,
+            "width": 306
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 886.39376566238241,
+            "y": 906.500234438311
+          },
+          "nodeIndex": "Empire_Country Codes",
+          "nodeLineageTag": "d7a12bf7-c926-4bcf-aed5-fae58da694fb",
+          "size": {
+            "height": 200,
+            "width": 272
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 446.93040802999531,
+            "y": 601.57492506475842
+          },
+          "nodeIndex": "EmpiresToMilleniums",
+          "nodeLineageTag": "a741c0a4-99c4-401d-9167-e7c3367578f7",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 1580.506097551782,
+            "y": 557.75410787870578
+          },
+          "nodeIndex": "Civilizational Labels",
+          "nodeLineageTag": "571c83f3-d5d9-4cf9-bee7-1b532bc6ce5e",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 1
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 79.553182037699813,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

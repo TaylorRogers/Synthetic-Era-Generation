@@ -1,0 +1,34 @@
+table Sources
+	lineageTag: a4ba6e4a-49e4-465d-a194-816f862bf8eb
+
+	column Label
+		lineageTag: 2c68b501-2404-4aac-989b-5011f5d667ea
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Label]
+
+		annotation SummarizationSetBy = Automatic
+
+	column URL
+		lineageTag: 2846c945-83a8-472c-9c95-054a6aa3267e
+		dataCategory: WebUrl
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [URL]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Sources = calculated
+		mode: import
+		source =
+				
+				DATATABLE(
+				    "Label", STRING,
+				    "URL", STRING,
+				    {
+				        { "Shape Map Location", "https://github.com/topojson/world-atlas" }
+				    }
+				)
+
+	annotation PBI_Id = f6ecf493db4b4961bcd1f87862fbf32e
+

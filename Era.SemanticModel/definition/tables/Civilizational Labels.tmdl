@@ -1,0 +1,99 @@
+table 'Civilizational Labels'
+	lineageTag: 571c83f3-d5d9-4cf9-bee7-1b532bc6ce5e
+
+	column 'Civilizational Labels'
+		dataType: string
+		lineageTag: 1c83d5c8-d870-40df-9859-dfe1bc35256d
+		summarizeBy: none
+		sourceColumn: Civilizational Labels
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Civilizational Labels' = m
+		mode: import
+		source =
+				let
+				    MajorHistoricalEmpires = {
+				        // East Asia
+				        "Chinese Dynasties",
+				        "Korean Kingdoms and Dynasties",
+				        "Japanese Empires and Shogunates",
+				        "Vietnamese Dynasties",
+				
+				        // South and Southeast Asia
+				        "Indian Empires and Kingdoms", // Maurya, Gupta, Mughal, etc.
+				        "Khmer Empire",
+				        "Indonesian Kingdoms and Empires", // Srivijaya, Majapahit
+				        "Thai Kingdoms",
+				
+				        // Steppe and Central Asia
+				        "Mongol Empire",
+				        "Xiongnu Confederation",
+				        "Scythian Kingdoms",
+				        "Hunnic Empires",
+				        "Turkic Empires and Khanates",
+				        "Tibetan Kingdoms and Empires",
+				        "Kushan Empire",
+				        "Timurid Empire",
+				        "Other Nomadic/Steppe Empires",
+				
+				        // Southwest Asia, Middle East, North Africa
+				        "Mesopotamian Empires and Kingdoms", // Sumerian, Akkadian, Assyrian, Babylonian
+				        "Persian Empires",
+				        "Hittite Empire",
+				        "Phoenician and Carthaginian Empires",
+				        "Egyptian Dynasties and Empires",
+				        "Arab Caliphates",
+				        "Hebrew and Israelite Kingdoms",
+				        "Anatolian Kingdoms and Empires",
+				        "Armenian Kingdoms",
+				
+				        // Sub-Saharan Africa
+				        "Aksumite Empire",
+				        "Ethiopian Empires",
+				        "West African Empires", // Ghana, Mali, Songhai
+				        "Central African Kingdoms", // Kongo, Luba, Lunda
+				        "Southern African Kingdoms", // Great Zimbabwe, Zulu
+				        "Swahili City-States",
+				
+				        // Europe
+				        "Minoan and Mycenaean Kingdoms",
+				        "Greek Empires and Kingdoms",
+				        "Roman Empire",
+				        "Byzantine Empire",
+				        "Celtic Kingdoms",
+				        "Germanic Kingdoms and Empires", // Franks, Goths, Lombards, etc.
+				        "Slavic Kingdoms and Empires",
+				        "Viking/Scandinavian Kingdoms",
+				        "Habsburg Empire",
+				        "Austro-Hungarian Empire",
+				        "Polish-Lithuanian Commonwealth",
+				        "Italian Kingdoms and City-States",
+				        "French Empires",
+				        "Spanish Empire",
+				        "Portuguese Empire",
+				        "Dutch Empire",
+				        "Belgian Empire",
+				        "British Empire",
+				        "Russian Empire",
+				
+				        // The Americas
+				        "Mesoamerican Empires", // Olmec, Maya, Aztec, etc.
+				        "Andean Empires", // Inca, Wari, Tiwanaku, Chimu
+				        "Mississippian Culture and North American Chiefdoms",
+				        "Mapuche Confederation",
+				        "Caribbean Kingdoms and Confederacies",
+				
+				        // Pacific and Others
+				        "Polynesian Kingdoms and Confederacies", // Tonga, Hawai‘i
+				        "Micronesian and Melanesian Chiefdoms"
+				    },
+				    #"Converted to Table" = Table.FromList(MajorHistoricalEmpires, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+				    #"Renamed Columns" = Table.RenameColumns(#"Converted to Table",{{"Column1", "Civilizational Labels"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

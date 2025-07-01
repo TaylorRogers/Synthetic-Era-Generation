@@ -1,0 +1,79 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.1.0/schema.json",
+  "name": "e00a85fbd453a8a5aec3",
+  "position": {
+    "x": 851.453744493392,
+    "y": 59.770925110132161,
+    "z": 2000,
+    "height": 625.90308370044056,
+    "width": 428.54625550660791,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Empires"
+                    }
+                  },
+                  "Property": "Empire"
+                }
+              },
+              "queryRef": "Empires.Empire",
+              "nativeQueryRef": "Empire"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Empires"
+                        }
+                      },
+                      "Property": "Empire"
+                    }
+                  },
+                  "Function": 5
+                }
+              },
+              "queryRef": "Count(Empires.Empire)",
+              "nativeQueryRef": "Count of Empire1"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "Empires"
+                      }
+                    },
+                    "Property": "Empire"
+                  }
+                },
+                "Function": 5
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

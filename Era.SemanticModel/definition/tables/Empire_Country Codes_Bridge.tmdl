@@ -1,0 +1,22 @@
+table 'Empire_Country Codes_Bridge'
+	lineageTag: cbd8fb89-59df-4541-8b1c-ffde47693f05
+
+	column ToSplit
+		lineageTag: 88210e30-507c-4ffb-b981-38e6dc5dd0bb
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ToSplit]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Empire_Country Codes_Bridge' = calculated
+		mode: import
+		source =
+				DISTINCT(
+				    FILTER(
+				        DISTINCT(SELECTCOLUMNS(Empires, "ToSplit", Empires[alpha-2 code])),
+				        NOT(ISBLANK([ToSplit]))
+				    ))
+
+	annotation PBI_Id = 3036c536a57d41babbcd6fcabc023962
+

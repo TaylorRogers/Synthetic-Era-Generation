@@ -1,0 +1,380 @@
+expression example_prompt =
+		"You are a world history data assistant with a sharp wit.
+		
+		Your task is to process the following CSV table of empires. Modifying it so it has these modified or new columns:
+		- Empire
+		- Start Year (as a single 4-digit number; BCE years must be negative integers, e.g., 1894 BC → -1894, 1325 → 1325. If a field contains multiple years or is ambiguous, select the most historically accepted value or the first listed.)
+		- End Year (same standard as above)
+		- Wikipedia URL (the most accurate/official Wikipedia page for the empire; include full URL)
+		- Snarky Summary (one short, sarcastic or witty line describing the empire in a humorous tone)
+		
+		The CSV table is as follows:
+		```csv
+		Empire,Start year,End year,Duration (years)
+		Achaemenid Empire,550 BC,330 BC,220
+		Afsharid Iran,1736,1796,60
+		Akkadian Empire,2334 BC,2154 BC,180
+		Akwamu,1629,1867,238
+		United States of America,1776,present,249
+		Angevin Empire,1154,1242,88
+		Aq Qoyunlu,1467,1508,41
+		Armenian Empire of Tigranes the Great,89 BC,55 BC,34
+		Asante Empire,1670,1902,232
+		Aulikara Empire,528,550,22
+		Austria-Hungary,1867,1918,51
+		Austrian Empire,1804,1867,63
+		Avar Khaganate,567,822,255
+		Ayutthaya Kingdom,1351,1767,416
+		Aztec Empire,1325,1521,196
+		Old Babylonian Empire,1894 BC,1595 BC,299
+		Neo-Babylonian Empire,626 BC,539 BC,87
+		Bamana Empire,1712,1861,149
+		Belgian colonial empire,1908,1962,55
+		Kingdom of Benin,1180,1897,717
+		Empire of Brazil,1822,1889,67
+		Britannic Empire,286,296,10
+		British Empire,1583,1997,414
+		British Raj (Indian Empire),1858,1947,89
+		Sultanate of Brunei (1368–1888),1368,1888,520
+		Old Great Bulgaria,632,668,36
+		First Bulgarian Empire,681,1018,337
+		Second Bulgarian Empire,1185,1396,211
+		Byzantine Empire,395,1453,1058
+		Carolingian Empire,800,888,88
+		Carthaginian Empire,814 BC,146 BC,668
+		Central African Empire,1976,1979,3
+		Chenla,550,802,252
+		Chimor,900,1470,570
+		Chola Empire,848,1279,431
+		Athenian Empire,454 BC,404 BC,50
+		Danish colonial empire,1536,1953,417
+		Durrani Empire,1747,1842,95
+		Dutch colonial empire,1595,1975,380
+		Dzungar Khanate,1634,1758,124
+		Empire of Charles V,1519,1556,37
+		New Kingdom of Egypt,1550 BC,1077 BC,473
+		Elamite Empire,1210 BC,1100 BC,110
+		Ethiopian Empire,1270,1974,704
+		First French Empire,1804,1815,11
+		Second French Empire,1852,1870,18
+		French colonial empire,1534,1814,280
+		French colonial empire,1830,1980,150
+		Funan,50,550,500
+		Gallic Empire,260,274,14
+		Gaza Empire,1824,1895,71
+		German colonial empire,1884,1920,36
+		German Empire,1871,1919,48
+		German Empire (1848–1849),1848,1849,1
+		```
+		
+		Return your output in two parts:
+		1. A consideration section describing any decisions or limitations in the transformation process, especially any ambiguous years and your approach to standardizing them.
+		2. A CSV block formatted exactly as shown below.
+		
+		```csv
+		""Empire"",""Start Year"",""End Year"",""Wikipedia URL"",""Snarky Summary""
+		""Example Empire"",""-1500"",""-900"",""https://en.wikipedia.org/wiki/Example_Empire"",""Conquered half the world, then lost their keys.""
+		```
+		" meta [IsParameterQuery=true, Type="Any", IsParameterQueryRequired=true]
+	lineageTag: 5498784d-728c-4766-a9b4-7fdd70a278b2
+	queryGroup: LLM
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
+expression 'LLMTableFromPrompt Source' = ```
+		let
+		    prompt = example_prompt,
+		
+		    baseUrl = "https://llm-buffer.azurewebsites.net/api/llm_buffer",
+		    apiKey = "PldSZeCeH-3NqcfKQh7hnIAXzNThxDTAbTX-d74b1MdyAzFu3huNNA==",
+		
+		    llmQuery = (prompt as text) as text =>
+		        let
+		            url = baseUrl & "?" & "code=" & apiKey & "&query=" & Uri.EscapeDataString(prompt),
+		            response = try Text.FromBinary(Web.Contents(url)) otherwise ""
+		        in
+		            response,
+		
+		    secText = llmQuery(example_prompt),
+		    secCsv =
+		    let
+		        tryTildeLf = Text.BetweenDelimiters(secText, "~~~csv" & "#(lf)", "~~~"),
+		        tryTilde = if tryTildeLf = "" then Text.BetweenDelimiters(secText, "~~~csv", "~~~") else tryTildeLf,
+		        tryBacktickLf = if tryTilde = "" then Text.BetweenDelimiters(secText, "```csv" & "#(lf)", "```") else tryTilde,
+		        tryBacktick = if tryBacktickLf = "" then Text.BetweenDelimiters(secText, "```csv", "```") else tryBacktickLf
+		    in
+		        tryBacktick,
+		    parsedCsv = Csv.Document(secCsv, [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+		    promoted = Table.PromoteHeaders(parsedCsv, [PromoteAllScalars=true])
+		    
+		
+		in
+		    promoted
+		```
+	lineageTag: b37f6e45-bfd7-463a-8877-400ec7152eac
+	queryGroup: LLM
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression LLMTableFromPrompt = ```
+		let
+		    Source = (example_prompt as any) => let
+		    prompt = example_prompt,
+		
+		    baseUrl = "https://llm-buffer.azurewebsites.net/api/llm_buffer",
+		    apiKey = "PldSZeCeH-3NqcfKQh7hnIAXzNThxDTAbTX-d74b1MdyAzFu3huNNA==",
+		
+		    llmQuery = (prompt as text) as text =>
+		        let
+		            url = baseUrl & "?" & "code=" & apiKey & "&query=" & Uri.EscapeDataString(prompt),
+		            response = try Text.FromBinary(Web.Contents(url)) otherwise ""
+		        in
+		            response,
+		
+		    secText = llmQuery(example_prompt),
+		    secCsv =
+		    let
+		        tryTildeLf = Text.BetweenDelimiters(secText, "~~~csv" & "#(lf)", "~~~"),
+		        tryTilde = if tryTildeLf = "" then Text.BetweenDelimiters(secText, "~~~csv", "~~~") else tryTildeLf,
+		        tryBacktickLf = if tryTilde = "" then Text.BetweenDelimiters(secText, "```csv" & "#(lf)", "```") else tryTilde,
+		        tryBacktick = if tryBacktickLf = "" then Text.BetweenDelimiters(secText, "```csv", "```") else tryBacktickLf
+		    in
+		        tryBacktick,
+		    parsedCsv = Csv.Document(secCsv, [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+		    promoted = Table.PromoteHeaders(parsedCsv, [PromoteAllScalars=true])
+		    
+		
+		in
+		    promoted
+		in
+		    Source
+		```
+	lineageTag: 8f0f905e-c477-424a-9abf-17a6a6b1a14b
+	queryGroup: LLM
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Function
+
+expression EmpiresPerEra =
+		let
+		    // Input parameters for the period (as text)
+		    startYear = "2000 BCE",
+		    endYear = "0 CE",
+		
+		    // LLM prompt with a generalized, realistic example row (NO triple backticks)
+		    prompt =
+		"You are a historical data assistant.
+		
+		Your task is to extract a comprehensive timeline of major world eras and empires from credible online sources (such as Wikipedia, academic timelines, or open historical databases). For each entry, you must cite the primary online source (for example, a specific Wikipedia page, Britannica entry, or academic database). Only include eras or empires with significant historical impact (exclude minor city-states or obscure polities).
+		
+		Return only eras or empires that **both** start at or after " & startYear & " and end at or before " & endYear & ". Do not include any entity that started before " & startYear & " or ended after " & endYear & ". Be strict: the entire duration of the empire or era must fall within the specified range.
+		
+		Return a comprehensive list with up to 50 distinct eras or empires that meet these criteria. If fewer than 50 exist, include as many as possible, but aim to maximize the breadth and regional diversity of the results.
+		
+		Return your output in two parts:
+		
+		1. A plain text summary highlighting the scope, sources, and any important decisions or limitations about coverage (for example, which regions are included, how BCE/CE is handled, or why some eras are omitted).
+		
+		2. A CSV block formatted exactly as shown below. For each row, include a column with the URL or clear citation to the source where you found the dates and details for that empire or era.
+		```csv
+		""Name"",""Type"",""Start Year"",""End Year"",""Region"",""Notable Event(s)"",""Source""
+		""Example Empire"",""Empire"",""1500 BCE"",""500 BCE"",""West Asia"",""Rise of first major states"",""https://en.wikipedia.org/wiki/Example_Empire""
+		```
+		",
+		
+		    Source = LLMTableFromPrompt(prompt)
+		in
+		    Source
+	lineageTag: 439032c1-3803-4be1-899d-6e775a7a4e33
+	queryGroup: LLM
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Empires_To_Large =
+		let
+		    Source = Web.Page(Web.Contents("https://en.wikipedia.org/wiki/List_of_empires")),
+		    Data = Source{0}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(Data,{{"Empire", type text}, {"Start year", type text}, {"End year", type text}, {"Duration (years)", type text}}),
+		    texttable = TableToCSV(#"Changed Type"),
+		    query = "You are a world history data assistant with a sharp wit.
+		
+		Your task is to process the following CSV table of empires. For each row, return a new CSV including the following fields:
+		- Empire
+		- Start Year (as a single 4-digit number; BCE years must be negative integers, e.g., 1894 BC → -1894, 1325 → 1325. If a field contains multiple years or is ambiguous, select the most historically accepted value or the first listed.)
+		- End Year (same standard as above)
+		- Wikipedia URL (the most accurate/official Wikipedia page for the empire; include full URL)
+		- Snarky Summary (one short, sarcastic or witty line describing the empire in a humorous tone)
+		
+		The CSV table is as follows:
+		```csv
+		" & texttable & "
+		```
+		
+		Return your output in two parts:
+		1. A consideration section describing any decisions or limitations in the transformation process, especially any ambiguous years and your approach to standardizing them.
+		2. A CSV block formatted exactly as shown below.
+		
+		```csv
+		""Empire"",""Start Year"",""End Year"",""Wikipedia URL"",""Snarky Summary""
+		""Example Empire"",""-1500"",""-900"",""https://en.wikipedia.org/wiki/Example_Empire"",""Conquered half the world, then lost their keys.""
+		```
+		",
+		    answer = LLMTableFromPrompt(query)
+		in
+		    answer
+	lineageTag: 5a8410e6-1255-405e-bd8d-1407ab895a20
+	queryGroup: Learning
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'EmpiresPerEra (2)' =
+		let
+		    // Input parameters for the period (as text)
+		    startYear = "2000 BCE",
+		    endYear = "0 CE",
+		
+		    // LLM prompt with a generalized, realistic example row (NO triple backticks)
+		    prompt =
+		"You are a historical data assistant.
+		
+		Your task is to extract a comprehensive timeline of major world eras and empires from credible online sources (such as Wikipedia, academic timelines, or open historical databases). For each entry, you must cite the primary online source (for example, a specific Wikipedia page, Britannica entry, or academic database). Only include eras or empires with significant historical impact (exclude minor city-states or obscure polities).
+		
+		Return only eras or empires that occur partially or fully between " & startYear & " and " & endYear & ". This means any entity whose start year is before " & endYear & " and end year is after " & startYear & " should be included.
+		
+		Return a comprehensive list with up to 50 distinct eras or empires that meet these criteria. If fewer than 50 exist, include as many as possible, but aim to maximize the breadth and regional diversity of the results.
+		
+		Return your output in two parts:
+		
+		1. A plain text summary highlighting the scope, sources, and any important decisions or limitations about coverage (for example, which regions are included, how BCE/CE is handled, or why some eras are omitted).
+		
+		2. A CSV block formatted exactly as shown below. For each row, include a column with the URL or clear citation to the source where you found the dates and details for that empire or era.
+		```csv
+		""Name"",""Type"",""Start Year"",""End Year"",""Region"",""Notable Event(s)"",""Source""
+		""Example Empire"",""Empire"",""1500 BCE"",""500 BCE"",""West Asia"",""Rise of first major states"",""https://en.wikipedia.org/wiki/Example_Empire""
+		```
+		",
+		
+		    Source = LLMTableFromPrompt(prompt)
+		in
+		    Source
+	lineageTag: c53ccb09-6af7-40c6-be1b-8db5be1aacf5
+	queryGroup: LLM
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression TableToCSV =
+		(Table as table, optional Delimiter as text) as text =>
+		let
+		    delim = if Delimiter = null then "," else Delimiter,
+		    // Get column names and join as CSV header
+		    Header = Text.Combine(Table.ColumnNames(Table), delim),
+		    // Get table rows as lists of text and join with delimiter
+		    Rows = List.Transform(
+		        Table.ToRows(Table),
+		        each Text.Combine(List.Transform(_, each Text.From(_)), delim)
+		    ),
+		    // Combine header and rows
+		    AllRows = List.Combine({{Header}, Rows}),
+		    // Combine everything into one CSV string with line feeds
+		    CSV = Text.Combine(AllRows, "#(lf)")
+		in
+		    CSV
+	lineageTag: 564ad37e-9a4d-4f14-811c-4ab299b6f140
+	queryGroup: LLM
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Function
+
+expression TableToCSV_Chunker =
+		(chunkTable as table, optional chunkSize as number) as table =>
+		let
+		    size = if chunkSize = null then 50 else chunkSize,
+		    AddIndex = Table.AddIndexColumn(chunkTable, "Idx", 0, 1),
+		    AddChunk = Table.AddColumn(AddIndex, "Chunk", each Number.IntegerDivide([Idx], size)),
+		    Grouped = Table.Group(
+		        AddChunk,
+		        {"Chunk"},
+		        {{"Rows", each Table.RemoveColumns(_, {"Idx", "Chunk"}), type table}}
+		    ),
+		    AddCsv = Table.TransformColumns(Grouped, {"Rows", each TableToCSV(_)}),
+		    ChunksList = AddCsv[Rows],
+		    ConvertedToTable = Table.FromList(ChunksList, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+		    Renamed = Table.RenameColumns(ConvertedToTable,{{"Column1", "texttable"}})
+		in
+		    Renamed
+	lineageTag: d3e60477-85c0-46e3-bab5-7b7c71b5598c
+	queryGroup: LLM
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Function
+
+expression MilleniumKeyGenerator =
+		(startText as text, endText as text) as text =>
+		    let
+		        // Helper to convert various year text formats to signed integer
+		        toNum = (y as text) as number =>
+		            let
+		                t = Text.Upper(Text.Trim(y)),
+		                isBC = Text.Contains(t, "BC") or Text.Contains(t, "BCE"),
+		                isAD = Text.Contains(t, "AD") or Text.Contains(t, "CE"),
+		                justNum = Text.Select(t, {"0".."9", "-"}),
+		                n = if justNum = "" then null else Number.FromText(justNum),
+		                result = if isBC then -Number.Abs(n) else n
+		            in
+		                result,
+		
+		        start = toNum(startText),
+		        end = toNum(endText),
+		        startRounded = Number.RoundDown(start / 1000) * 1000,
+		        endRounded = Number.RoundUp(end / 1000) * 1000,
+		        low = List.Min({startRounded, endRounded}),
+		        high = List.Max({startRounded, endRounded}),
+		        numBlocks = Number.RoundDown((high - low) / 1000),
+		        millennia =
+		            List.Transform(
+		                List.Numbers(0, numBlocks),
+		                (i) =>
+		                    let
+		                        lower = low + i * 1000,
+		                        upper = lower + 1000,
+		                        format = (y) => if y < 0 then Text.From(Number.Abs(y)) & "BCE" else Text.From(y) & "CE"
+		                    in
+		                        format(lower) & "-" & format(upper)
+		            ),
+		        result = Text.Combine(millennia, ";")
+		    in
+		        result
+	lineageTag: 07f14621-ca5d-4cfd-8f22-ee5052860a48
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Function
+
+expression MilleniumGeoJoiner =
+		(Codes as text, Millennia as text) as table =>
+		    let
+		        codesList = List.Select(List.Transform(Text.Split(Codes, ";"), Text.Trim), each _ <> ""),
+		        milliList = List.Select(List.Transform(Text.Split(Millennia, ";"), Text.Trim), each _ <> ""),
+		        combos = List.TransformMany(codesList, (c) => milliList, (c, m) => [alpha 2 = c, Millennium = m]),
+		        result = Table.FromRecords(combos)
+		    in
+		        result
+	lineageTag: 97d9ae12-5ac3-4024-83bf-c458c426137a
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Function
+

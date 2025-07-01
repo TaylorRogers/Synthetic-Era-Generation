@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Era"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "ba8829dc-6148-407b-b435-10ef475c6f47"
+  }
+}

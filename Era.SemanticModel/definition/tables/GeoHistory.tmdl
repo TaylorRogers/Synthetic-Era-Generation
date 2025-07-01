@@ -1,0 +1,289 @@
+table GeoHistory
+	lineageTag: 8c41bf8a-d88c-49ce-ab43-3590a62b56c3
+
+	column CountryCode
+		dataType: string
+		lineageTag: b9fc1bbb-5369-424d-9e5a-00e98c4b8b15
+		summarizeBy: none
+		sourceColumn: CountryCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column CountryName
+		dataType: string
+		lineageTag: 416827fb-992b-4e3c-9769-45e2450685bf
+		summarizeBy: none
+		sourceColumn: CountryName
+
+		annotation SummarizationSetBy = Automatic
+
+	column MilleniumTable
+		dataType: string
+		lineageTag: f2b0a94f-f13c-4a38-b255-c932eebbc223
+		summarizeBy: none
+		sourceColumn: MilleniumTable
+
+		annotation SummarizationSetBy = Automatic
+
+	column query
+		dataType: string
+		lineageTag: a6ff227b-cdbe-411a-a639-87ffeed57fa1
+		summarizeBy: none
+		sourceColumn: query
+
+		annotation SummarizationSetBy = Automatic
+
+	column MilleniumKey
+		dataType: string
+		lineageTag: 61f44f0e-a157-4c5d-b225-8d61f5e879d8
+		summarizeBy: none
+		sourceColumn: MilleniumKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column EraKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 32e311c6-c5c6-4b85-84d7-9485e55186d3
+		summarizeBy: count
+		sourceColumn: EraKey
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Notable People'
+		dataType: string
+		lineageTag: 14fb14e4-e613-451f-9ec3-38a8889a29e4
+		summarizeBy: none
+		sourceColumn: Notable People
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Political Structure'
+		dataType: string
+		lineageTag: 91e8266c-d972-4b9f-afc3-655470037a12
+		summarizeBy: none
+		sourceColumn: Political Structure
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source
+		dataType: string
+		lineageTag: 02245d33-8132-423e-bc14-272894a92ee4
+		summarizeBy: none
+		sourceColumn: Source
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Source URL'
+		dataType: string
+		lineageTag: 27617559-381d-4b3c-89e1-13f6c1e6188c
+		summarizeBy: none
+		sourceColumn: Source URL
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Role Type'
+		dataType: string
+		lineageTag: d4d93a06-ddf2-4a20-87ae-87b01b1c3778
+		summarizeBy: none
+		sourceColumn: Role Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Society Type Reason'
+		dataType: string
+		lineageTag: 72da4f80-88a8-4df1-a469-07565ed3e175
+		summarizeBy: none
+		sourceColumn: Society Type Reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Society Type'
+		dataType: string
+		lineageTag: cda41b5c-c711-458b-8a7a-f05148c186a5
+		summarizeBy: none
+		sourceColumn: Society Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Political Structure Reason'
+		dataType: string
+		lineageTag: 559fe72e-1035-40fb-8adf-c5120672ec53
+		summarizeBy: none
+		sourceColumn: Political Structure Reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Climate Reason'
+		dataType: string
+		lineageTag: 01eaf0f8-bf08-4bfc-99b7-b2f4eb528eef
+		summarizeBy: none
+		sourceColumn: Climate Reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Climate Type'
+		dataType: string
+		lineageTag: a1fcddf2-ecbe-4e75-986e-594efb81821a
+		summarizeBy: none
+		sourceColumn: Climate Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tech Reason'
+		dataType: string
+		lineageTag: 9f6f5344-ad3d-4937-9ee4-9d07acfd3d18
+		summarizeBy: none
+		sourceColumn: Tech Reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tech
+		dataType: string
+		lineageTag: 8972764e-07b4-456e-ba2b-572ccd3b36f0
+		summarizeBy: none
+		sourceColumn: Tech
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tech Level Reason'
+		dataType: string
+		lineageTag: a5ee3a4b-d168-4028-9f6f-f4f922d3bcf1
+		summarizeBy: none
+		sourceColumn: Tech Level Reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tech Level'
+		dataType: string
+		lineageTag: 7d4d20d2-7742-497b-938b-e421efbe6556
+		summarizeBy: none
+		sourceColumn: Tech Level
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Major Trade Reason'
+		dataType: string
+		lineageTag: 958a0614-149b-43c2-8c83-5aa8cd2e324f
+		summarizeBy: none
+		sourceColumn: Major Trade Reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Major Trade'
+		dataType: string
+		lineageTag: 25ad445e-a730-4c44-bf67-5af617d02c68
+		summarizeBy: none
+		sourceColumn: Major Trade
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Urbanization Reason'
+		dataType: string
+		lineageTag: ad533d55-79bd-4fd2-9ab0-1ef868933674
+		summarizeBy: none
+		sourceColumn: Urbanization Reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column Urbanization
+		dataType: string
+		lineageTag: a840e904-a3d9-4ee3-8dca-e3c2091188cc
+		summarizeBy: none
+		sourceColumn: Urbanization
+
+		annotation SummarizationSetBy = Automatic
+
+	column GeoHistory_Key
+		dataType: string
+		lineageTag: b64762e7-6507-4a2d-8fe4-b97d5a9250ca
+		summarizeBy: none
+		sourceColumn: GeoHistory_Key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition GeoHistory = m
+		mode: import
+		source = ```
+				let
+				    // Reference your tables
+				    Milleniums = Milleniums,
+				    ModernCountry = ModernCountry,
+				
+				    // Select only columns you need
+				    MilleniumCols = Table.SelectColumns(Milleniums, {"MilleniumKey", "EraKey"}),
+				    CountryCols = Table.SelectColumns(ModernCountry, {"CountryCode", "CountryName"}),
+				
+				    // Cross join logic (ModernCountry as base)
+				    AddMilleniumTable = Table.AddColumn(CountryCols, "MilleniumTable", each MilleniumCols),
+				    #"Added Custom" = Table.TransformColumns(AddMilleniumTable, {"MilleniumTable", each TableToCSV(_), type text}),
+				    query = Table.AddColumn(#"Added Custom", "query", each "
+				You are a world history data assistant.
+				
+				Given the table of millennia for " & [CountryName] & " (country code: " & [CountryCode] & ") below, process every row in the input table.  
+				**Return exactly one output CSV row for every row in MilleniumTable—do not add, remove, or merge rows under any circumstances.**
+				
+				MilleniumTable:  
+				" & [MilleniumTable] & "
+				
+				Columns (all values in double double-quotes):
+				
+				- MilleniumKey
+				- EraKey
+				- Notable People
+				- Role Type
+				- Society Type Reason
+				- Society Type         // Forager band, Clan, Village, City, Chiefdom, Kingdom, Empire, Colony
+				- Political Structure Reason
+				- Political Structure  // Tribal council, Hereditary chieftainship, Monarchy, Oligarchy, Theocracy, Republic
+				- Climate Reason
+				- Climate Type         // Arid, Semi-arid, Temperate, Mountain, River valley, Wetland, Forest, Savannah, Oasis, Tundra
+				- Tech Reason
+				- Tech                 // e.g., Tin-bronze metallurgy, Canal construction, Horse domestication (main innovation per millennium)
+				- Tech Level Reason
+				- Tech Level           // Stone, Copper, Bronze, Iron, Medieval, Early Modern, Modern
+				- Major Trade Reason
+				- Major Trade          // e.g., Obsidian trade, Silk Road (direct evidence only)
+				- Urbanization Reason
+				- Urbanization         // None, Low, Moderate, High
+				- Source
+				- Source URL
+				
+				Guidelines:
+				- **Return one output row for each input row in MilleniumTable (e.g., if MilleniumTable has 12 rows, your output must have 12 rows).**
+				- Output rows in the same order as MilleniumTable.
+				- If data is unknown for a millennium, fields may be blank, but never omit or merge the row.
+				- Anchor all facts to archaeological or scholarly consensus within " & [CountryName] & "'s borders and time period.
+				- Every Reason column must state evidence or scholarly justification for its Category column.
+				- All Category values must be from the fixed list for each field.
+				- Notable People: Only individuals attested archaeologically or textually for " & [CountryName] & ".
+				- Role Type: One per person, matched order.
+				- Use double double-quotes for all values in the CSV, including headers.
+				- No regional or cross-border extrapolation.
+				- No parenthetical explanations or spaces before/after semicolons in lists.
+				
+				Return output in two parts:
+				1. Considerations: List any interpretive limits or evidence gaps for " & [CountryName] & " and period.
+				2. CSV block, exactly as shown, with a row for each row of MilleniumTable.
+				
+				```csv
+				""MilleniumKey"",""EraKey"",""Notable People"",""Role Type"",""Society Type Reason"",""Society Type"",""Political Structure Reason"",""Political Structure"",""Climate Reason"",""Climate Type"",""Tech Reason"",""Tech"",""Tech Level Reason"",""Tech Level"",""Major Trade Reason"",""Major Trade"",""Urbanization Reason"",""Urbanization"",""Source"",""Source URL""
+				""4000BCE-3000BCE"",""-4000"","""","""",""Site size <5ha, only small hamlets excavated."",""Village"",""No central architecture; communal housing predominates."",""Tribal council"",""Lake cores show higher rainfall, stable rivers."",""Temperate;River valley"",""Copper slag and crucibles found at Shortugai."",""Copper metallurgy"",""No bronze objects; only copper tools."",""Copper"",""No exotic goods in burials; local trade only."",""None"",""No site above 1,000 population."",""Low"",""Possehl 2002"",""https://www.cambridge.org/9780521571968""
+				""3000BCE-2000BCE"",""-4000"","""","""",""Fortified sites appear; settlement size increases."",""Village;Chiefdom"",""Elite burials and large structures appear."",""Hereditary chieftainship"",""Mountain pollen spectra remain stable, minor drying."",""Mountain;River valley"",""Bronze alloying debris at Tepe Fullol."",""Tin-bronze metallurgy"",""Bronze implements widespread, tin detected."",""Bronze"",""Bead and tin trade items found."",""Long-distance trade"",""Fortified centers with 2,000+ people."",""Moderate"",""Sarianidi 1998"",""https://www.jstor.org/stable/3643044""
+				""2000BCE-1000BCE"",""-2000"",""Indra"" ,""Ruler"" ,""Early Vedic texts mention kings named Indra in this region."",""Chiefdom;Tribal"" ,""Epics describe council of chiefs, not monarchy."",""Tribal council"" ,""Loess deposits and pollen show more arid conditions."",""Semi-arid;River valley"" ,""Earliest horse bones at Ai Khanoum."",""Horse domestication"" ,""Few bronze artifacts after 1500 BCE."",""Bronze"" ,""Horse gear and pottery styles suggest exchange with steppes."",""Horse and chariot trade"" ,""Clustered villages; low-level urbanization."",""Low"" ,""Bryant 2001"" ,""https://www.cambridge.org/9780700711306""
+				```
+				
+				"),
+				    #"Added Custom1" = Table.AddColumn(query, "answer", each LLMTableFromPrompt([query])),
+				    #"Expanded answer" = Table.ExpandTableColumn(#"Added Custom1", "answer", {"MilleniumKey", "EraKey", "Notable People", "Role Type", "Society Type Reason", "Society Type", "Political Structure Reason", "Political Structure", "Climate Reason", "Climate Type", "Tech Reason", "Tech", "Tech Level Reason", "Tech Level", "Major Trade Reason", "Major Trade", "Urbanization Reason", "Urbanization", "Source", "Source URL"}, {"MilleniumKey", "EraKey", "Notable People", "Role Type", "Society Type Reason", "Society Type", "Political Structure Reason", "Political Structure", "Climate Reason", "Climate Type", "Tech Reason", "Tech", "Tech Level Reason", "Tech Level", "Major Trade Reason", "Major Trade", "Urbanization Reason", "Urbanization", "Source", "Source URL"}),
+				    #"Added Custom2" = Table.AddColumn(#"Expanded answer", "GeoHistory_Key", each [MilleniumKey]&"_"&[CountryCode])
+				in
+				    #"Added Custom2"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,264 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.1.0/schema.json",
+  "name": "7df0706031e51bd172e5",
+  "position": {
+    "x": 7.7811550151975686,
+    "y": 82.674772036474167,
+    "z": 2000,
+    "height": 637.08206686930089,
+    "width": 456.17021276595744,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Empires"
+                    }
+                  },
+                  "Property": "National Identity Group"
+                }
+              },
+              "queryRef": "Empires.National Identity Group",
+              "nativeQueryRef": "National Identity Group",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Empires"
+                    }
+                  },
+                  "Property": "Empire"
+                }
+              },
+              "queryRef": "Empires.Empire",
+              "nativeQueryRef": "Empire1",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Empires"
+                    }
+                  },
+                  "Property": "Start Year"
+                }
+              },
+              "queryRef": "Empires.Start Year",
+              "nativeQueryRef": "Start Year",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Empires"
+                    }
+                  },
+                  "Property": "End Year"
+                }
+              },
+              "queryRef": "Empires.End Year",
+              "nativeQueryRef": "End Year",
+              "active": true
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Empires"
+                  }
+                },
+                "Property": "Start Year"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "expansionStates": [
+      {
+        "roles": [
+          "Rows"
+        ],
+        "levels": [
+          {
+            "queryRefs": [
+              "Empires.National Identity Group"
+            ],
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Empires"
+                    }
+                  },
+                  "Property": "National Identity Group"
+                }
+              }
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "Empires.Empire"
+            ],
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Empires"
+                    }
+                  },
+                  "Property": "Empire"
+                }
+              }
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "Empires.Start Year"
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "Empires.End Year"
+            ],
+            "isPinned": true
+          }
+        ],
+        "root": {}
+      }
+    ],
+    "objects": {
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "133.99118942731278D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Empires.Empire"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "158.18502202643174D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Empires.National Identity Group"
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "layout": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Tabular'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "58da55aa5a07690d7b3a",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Empires"
+              }
+            },
+            "Property": "National Identity Group"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "c2f2ac6d3180e14c2078",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Empires"
+              }
+            },
+            "Property": "Start Year"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "f2979a964eb303108b05",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Empires"
+              }
+            },
+            "Property": "End Year"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "f5fff18601558a7e0a96",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Empires"
+              }
+            },
+            "Property": "Empire"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}

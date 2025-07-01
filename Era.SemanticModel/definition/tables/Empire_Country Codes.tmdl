@@ -1,0 +1,42 @@
+table 'Empire_Country Codes'
+	lineageTag: d7a12bf7-c926-4bcf-aed5-fae58da694fb
+
+	measure '- Empire Geographic Area Count' = DISTINCTCOUNT('Empire_Country Codes'[Empire Geographic Area])
+		formatString: 0
+		lineageTag: 5e1a4ee7-617c-420b-b380-4da2022cf1c0
+
+	column ToSplit
+		lineageTag: cbcfaa1f-1543-421d-afa0-d2fdc132e670
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ToSplit]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Country Codes'
+		lineageTag: ada15258-e53a-4e84-8918-a63e7ba36d36
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Country Codes]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Empire_Country Codes' = calculated
+		mode: import
+		source =
+				DISTINCT(
+				SELECTCOLUMNS(
+				    GENERATE(
+				        ADDCOLUMNS(
+				            'Empire_Country Codes_Bridge',
+				            "AreaPath", SUBSTITUTE([ToSplit], ";", "|"),
+				            "NumParts", PATHLENGTH(SUBSTITUTE([ToSplit], ";", "|"))
+				        ),
+				        GENERATESERIES(1, [NumParts], 1)
+				    ),
+				    "ToSplit", [ToSplit],
+				    "Country Codes", PATHITEM([AreaPath], [Value], TEXT)
+				))
+
+	annotation PBI_Id = 8c6baeb728164be09677b292ac84df24
+

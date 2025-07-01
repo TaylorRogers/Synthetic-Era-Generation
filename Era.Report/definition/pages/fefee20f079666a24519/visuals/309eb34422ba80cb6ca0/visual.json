@@ -1,0 +1,112 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.1.0/schema.json",
+  "name": "309eb34422ba80cb6ca0",
+  "position": {
+    "x": 0,
+    "y": 124.05286343612335,
+    "z": 0,
+    "height": 583.04845814977978,
+    "width": 840.17621145374449,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Empires"
+                    }
+                  },
+                  "Property": "Empire"
+                }
+              },
+              "queryRef": "Empires.Empire",
+              "nativeQueryRef": "Empire"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Empires"
+                    }
+                  },
+                  "Property": "Snarky Summary"
+                }
+              },
+              "queryRef": "Empires.Snarky Summary",
+              "nativeQueryRef": "Snarky Summary"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Empires"
+                    }
+                  },
+                  "Property": "Empire Geographic Area"
+                }
+              },
+              "queryRef": "Empires.Empire Geographic Area",
+              "nativeQueryRef": "Empire Geographic Area"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Empires"
+                    }
+                  },
+                  "Property": "alpha-2 code"
+                }
+              },
+              "queryRef": "Empires.Country Codes",
+              "nativeQueryRef": "Country Codes"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "462.33668888788543D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Empires.Snarky Summary"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "283.83700440528634D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Empires.Empire Geographic Area"
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

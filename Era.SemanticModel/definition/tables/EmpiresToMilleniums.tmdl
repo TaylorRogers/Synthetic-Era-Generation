@@ -1,0 +1,78 @@
+table EmpiresToMilleniums
+	lineageTag: a741c0a4-99c4-401d-9167-e7c3367578f7
+
+	column MillenniumKey
+		dataType: string
+		lineageTag: 65ea76c8-81b8-426c-9fec-469cf0333aa5
+		summarizeBy: none
+		sourceColumn: MillenniumKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column CountryCode
+		dataType: string
+		lineageTag: 1d215bc6-1120-40e5-9547-1343d93fe7be
+		summarizeBy: none
+		sourceColumn: CountryCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column Millennium
+		dataType: string
+		lineageTag: ec6afbbe-2957-4e14-b990-9e7179e34d6d
+		summarizeBy: none
+		sourceColumn: Millennium
+
+		annotation SummarizationSetBy = Automatic
+
+	column GeoHistoryKey
+		dataType: string
+		lineageTag: 320b3355-76fa-43a3-b114-79127116eb68
+		summarizeBy: none
+		sourceColumn: GeoHistoryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Empire
+		dataType: string
+		lineageTag: 5ad301b6-b950-440e-add7-a2f05e47b12c
+		summarizeBy: none
+		sourceColumn: Empire
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'alpha-2 code'
+		dataType: string
+		lineageTag: 4af0303f-e257-4a89-8f9d-52ecba37abd8
+		summarizeBy: none
+		sourceColumn: alpha-2 code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'alpha 2'
+		dataType: string
+		lineageTag: d7ce8e62-d198-458b-8107-e877f4929f4a
+		summarizeBy: none
+		sourceColumn: alpha 2
+
+		annotation SummarizationSetBy = Automatic
+
+	partition EmpiresToMilleniums = m
+		mode: import
+		source =
+				let
+				    Source = Empires,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Empire","alpha-2 code", "MillenniumKey"}),
+				    #"Added Custom" = Table.AddColumn(#"Removed Other Columns", "Custom", each MilleniumGeoJoiner([#"alpha-2 code"],[MillenniumKey])),
+				    #"Expanded Custom" = Table.ExpandTableColumn(#"Added Custom", "Custom", {"alpha 2", "Millennium"}, {"alpha 2", "Millennium"}),
+				    #"Merged Queries" = Table.NestedJoin(#"Expanded Custom", {"alpha 2"}, ModernCountry, {"alpha-2"}, "ModernCountry", JoinKind.LeftOuter),
+				    #"Expanded ModernCountry" = Table.ExpandTableColumn(#"Merged Queries", "ModernCountry", {"CountryCode"}, {"CountryCode"}),
+				    #"Added Custom1" = Table.AddColumn(#"Expanded ModernCountry", "Custom", each [Millennium]&"_"&[CountryCode]),
+				    #"Renamed Columns" = Table.RenameColumns(#"Added Custom1",{{"Custom", "GeoHistoryKey"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,72 @@
+table Milleniums
+	lineageTag: e520e4c8-a666-45c1-9091-f640bf4f6cfb
+
+	column MilleniumKey
+		dataType: string
+		lineageTag: 43e3dbe8-9c2e-4f87-b2bb-41c7fe5afda6
+		summarizeBy: none
+		sourceColumn: MilleniumKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column EraKey
+		dataType: string
+		lineageTag: 762e9fbb-31bf-4983-ac7d-cae5df94af93
+		summarizeBy: none
+		sourceColumn: EraKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column StartYear
+		dataType: string
+		lineageTag: f9ccb06c-e759-4780-997d-45b3827aa842
+		summarizeBy: none
+		sourceColumn: StartYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column EndYear
+		dataType: string
+		lineageTag: ceeb129c-dddf-444f-8b30-dbee859a9e37
+		summarizeBy: none
+		sourceColumn: EndYear
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Milleniums = m
+		mode: import
+		source =
+				let
+				    YearLabel = (y as number) as text =>
+				        if y < 0 then Number.ToText(Number.Abs(y)) & "BCE"
+				        else Number.ToText(y) & "CE",
+				
+				    EraMeta1000 = {
+				        [ EraKey = -10000, StartYear = YearLabel(-10000), EndYear = YearLabel(-9000) ],
+				        [ EraKey = -10000, StartYear = YearLabel(-9000),  EndYear = YearLabel(-8000) ],
+				        [ EraKey = -8000,  StartYear = YearLabel(-8000),  EndYear = YearLabel(-7000) ],
+				        [ EraKey = -8000,  StartYear = YearLabel(-7000),  EndYear = YearLabel(-6000) ],
+				        [ EraKey = -6000,  StartYear = YearLabel(-6000),  EndYear = YearLabel(-5000) ],
+				        [ EraKey = -6000,  StartYear = YearLabel(-5000),  EndYear = YearLabel(-4000) ],
+				        [ EraKey = -4000,  StartYear = YearLabel(-4000),  EndYear = YearLabel(-3000) ],
+				        [ EraKey = -4000,  StartYear = YearLabel(-3000),  EndYear = YearLabel(-2000) ],
+				        [ EraKey = -2000,  StartYear = YearLabel(-2000),  EndYear = YearLabel(-1000) ],
+				        [ EraKey = -2000,  StartYear = YearLabel(-1000),  EndYear = YearLabel(0) ],
+				        [ EraKey = 0,      StartYear = YearLabel(0),      EndYear = YearLabel(1000) ],
+				        [ EraKey = 0,      StartYear = YearLabel(1000),   EndYear = YearLabel(2000) ]
+				    },
+				
+				    EraTable1000 = Table.FromRecords(EraMeta1000),
+				    WithMilleniumKey = Table.AddColumn(
+				        EraTable1000,
+				        "MilleniumKey",
+				        each [StartYear] & "-" & [EndYear],
+				        type text
+				    )
+				in
+				    WithMilleniumKey
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

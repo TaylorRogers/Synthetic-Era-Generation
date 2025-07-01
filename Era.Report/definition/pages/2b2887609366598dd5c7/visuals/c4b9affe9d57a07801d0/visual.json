@@ -1,0 +1,111 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.1.0/schema.json",
+  "name": "c4b9affe9d57a07801d0",
+  "position": {
+    "x": 649.726443768997,
+    "y": 95.319148936170222,
+    "z": 0,
+    "height": 587.47720364741645,
+    "width": 574.83282674772045,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "GeoHistory"
+                    }
+                  },
+                  "Property": "CountryName"
+                }
+              },
+              "queryRef": "GeoHistory.name",
+              "nativeQueryRef": "name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "GeoHistory"
+                    }
+                  },
+                  "Property": "MilleniumKey"
+                }
+              },
+              "queryRef": "GeoHistory.MilleniumKey",
+              "nativeQueryRef": "MilleniumKey"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "GeoHistory"
+                    }
+                  },
+                  "Property": "Political Structure"
+                }
+              },
+              "queryRef": "GeoHistory.Political Structure",
+              "nativeQueryRef": "Political Structure"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "GeoHistory"
+                    }
+                  },
+                  "Property": "Urbanization"
+                }
+              },
+              "queryRef": "GeoHistory.Urbanization",
+              "nativeQueryRef": "Urbanization"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "GeoHistory"
+                    }
+                  },
+                  "Property": "CountryCode"
+                }
+              },
+              "queryRef": "GeoHistory.CountryCode",
+              "nativeQueryRef": "CountryCode"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "GeoHistory"
+                  }
+                },
+                "Property": "CountryName"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

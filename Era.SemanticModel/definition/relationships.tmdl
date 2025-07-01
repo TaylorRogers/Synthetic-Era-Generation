@@ -1,0 +1,34 @@
+relationship AutoDetected_a3ce7566-118b-46af-b951-c7b6201046b2
+	fromColumn: Milleniums.EraKey
+	toColumn: Eras.EraKey
+
+relationship AutoDetected_838a5d5f-00d1-473b-90c2-a01ee1138b64
+	crossFilteringBehavior: bothDirections
+	fromColumn: GeoHistory.CountryCode
+	toColumn: ModernCountry.CountryCode
+
+relationship AutoDetected_1b28e1df-322c-432a-8630-f4a4beb41802
+	crossFilteringBehavior: bothDirections
+	fromColumn: GeoHistory.MilleniumKey
+	toColumn: Milleniums.MilleniumKey
+
+relationship 309c23d8-48da-f37e-e200-634bc9b76c43
+	crossFilteringBehavior: bothDirections
+	fromColumn: 'Empire_Country Codes'.ToSplit
+	toColumn: 'Empire_Country Codes_Bridge'.ToSplit
+
+relationship 81c17148-bed3-7fc5-2f81-e2354f3186f7
+	crossFilteringBehavior: bothDirections
+	fromColumn: EmpiresToMilleniums.GeoHistoryKey
+	toColumn: GeoHistory.GeoHistory_Key
+
+relationship f68abf46-c6f5-6f09-95e6-1ae413349687
+	crossFilteringBehavior: bothDirections
+	fromColumn: EmpiresToMilleniums.Empire
+	toColumn: Empires.Empire
+
+relationship AutoDetected_077ddd92-621a-4c4f-bc4d-5c58b2f21e0c
+	isActive: false
+	fromColumn: EmpiresToMilleniums.'alpha 2'
+	toColumn: ModernCountry.alpha-2
+

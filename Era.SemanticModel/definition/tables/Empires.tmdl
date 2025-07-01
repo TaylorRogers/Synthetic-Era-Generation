@@ -1,0 +1,138 @@
+table Empires
+	lineageTag: 8d087cb7-fa5f-4b0e-be6f-d56aa2cff861
+
+	measure '- Empires' = DISTINCTCOUNT('Empires'[Empire])
+		formatString: 0
+		lineageTag: e5ef18fb-687c-442e-af3f-c95e91926461
+
+	column Empire
+		dataType: string
+		lineageTag: 5fb3fbfb-f33e-4eea-9f90-b8813d488008
+		summarizeBy: none
+		sourceColumn: Empire
+		sortByColumn: 'Start Year'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Start Year'
+		dataType: int64
+		formatString: 0
+		lineageTag: 393e2de9-fac5-4671-9070-fab7df3ccec2
+		summarizeBy: none
+		sourceColumn: Start Year
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'End Year'
+		dataType: string
+		lineageTag: 27c2b4fc-ae6a-49b4-bf39-5249c36f8d97
+		summarizeBy: none
+		sourceColumn: End Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Wikipedia URL'
+		dataType: string
+		lineageTag: dfcde614-d1cf-4cf0-93ee-ead90ba5f0dc
+		summarizeBy: none
+		sourceColumn: Wikipedia URL
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Snarky Summary'
+		dataType: string
+		lineageTag: ada77e11-c02b-4ccc-9e9e-384ff308aaa4
+		summarizeBy: none
+		sourceColumn: Snarky Summary
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Empire Geographic Area'
+		dataType: string
+		lineageTag: bc46b952-280d-403d-8222-09fd2bf26c54
+		summarizeBy: none
+		sourceColumn: Empire Geographic Area
+
+		annotation SummarizationSetBy = Automatic
+
+	column MillenniumKey
+		dataType: string
+		lineageTag: b6976ccc-b8f4-4619-aad9-8fb73fb0338c
+		summarizeBy: none
+		sourceColumn: MillenniumKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'National Identity Group'
+		dataType: string
+		lineageTag: 1e5319de-35c4-4e57-b514-0854f3f587f9
+		summarizeBy: none
+		sourceColumn: National Identity Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'alpha-2 code'
+		dataType: string
+		lineageTag: cb36d589-a884-4666-9626-44d1d82681d6
+		summarizeBy: none
+		sourceColumn: alpha-2 code
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Empires = m
+		mode: import
+		source = ```
+				let
+				    Source = Web.Page(Web.Contents("https://en.wikipedia.org/wiki/List_of_empires")),
+				    CivilizationalLabels = TableToCSV(#"Civilizational Labels"),
+				    Data = Source{0}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(Data,{{"Empire", type text}, {"Start year", type text}, {"End year", type text}, {"Duration (years)", type text}}),
+				    Chunklist = TableToCSV_Chunker(#"Changed Type",50),
+				    #"Added Custom" = Table.AddColumn(Chunklist, "query", each 
+				"You are a world history data assistant with a sharp wit.
+				
+				Your task is to process the following CSV table of empires. For each row, return a new CSV including the following fields:
+				- Empire
+				- Start Year (as a single 4-digit number; BCE years must be negative integers, e.g., 1894 BC → -1894, 1325 → 1325. If a field contains multiple years or is ambiguous, select the most historically accepted value or the first listed.)
+				- End Year (same standard as above)
+				- Empire Geographic Area (semicolon-separated list of modern country names; e.g., ""Egypt; Iran; Turkey"")
+				- alpha-2 code (semicolon-separated list of modern ISO those countries; e.g., ""EG;IR;TR"")
+				- Wikipedia URL (the most accurate/official Wikipedia page for the empire; include full URL)
+				- Snarky Summary (one short, sarcastic or witty line describing the empire in a humorous tone)
+				- Civilizational Labels (the most historically and culturally appropriate “identity group” for each empire from the following list
+				" & CivilizationalLabels & "
+				
+				The CSV table is as follows:
+				```csv
+				" & [texttable] & "
+				```
+				
+				Return your output in two parts:
+				1. A consideration section describing any decisions or limitations in the transformation process, especially any ambiguous years and your approach to standardizing them, as well as your logic for choosing modern country names for each empire.
+				2. A CSV block formatted exactly as shown below.
+				
+				```csv
+				""Empire"",""Start Year"",""End Year"",""Empire Geographic Area"",""alpha-2 code"",""Wikipedia URL"",""Snarky Summary"",""National Identity Group""
+				""Example Empire"",""-1500"",""-900"",""Egypt; Iran; Turkey"",""EG;IR;TR"",""https://en.wikipedia.org/wiki/Example_Empire"",""Conquered half the world, then lost their keys."",""Persian Empire""
+				```
+				"),
+				    #"Added Custom1" = Table.AddColumn(#"Added Custom", "answer", each LLMTableFromPrompt([query])),
+				    #"Expanded answer" = Table.ExpandTableColumn(#"Added Custom1", "answer", {"Empire", "Start Year", "End Year", "Empire Geographic Area", "alpha-2 code", "Wikipedia URL", "Snarky Summary", "National Identity Group"}, {"Empire", "Start Year", "End Year", "Empire Geographic Area", "alpha-2 code", "Wikipedia URL", "Snarky Summary", "National Identity Group"}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Expanded answer",{"texttable", "query"}),
+				    #"Added Custom2" = Table.AddColumn(#"Removed Columns", "MillenniumKey",
+				        each 
+				            MilleniumKeyGenerator([Start Year],[End Year])
+				    ),
+				    #"Removed Duplicates" = Table.Distinct(#"Added Custom2", {"Empire"})
+				in
+				    #"Removed Duplicates"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
