@@ -1,0 +1,20 @@
+# Ignore binary Power BI files
+*.pbix
+*.pbit
+
+# Ignore temp/runtime engine data
+**/.pbi/
+**/.platform/
+
+# Ignore cache and local temp folders
+.cache/
+TempData/
+*.zip
+*.bak
+*.tmp
+~$*
+
+# Optional: Ignore local dev config
+*.DS_Store
+Thumbs.db
+*.user
