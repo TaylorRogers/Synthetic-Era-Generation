@@ -1,7 +1,7 @@
 ## Can an LLM Consistently Generate Structured Tabular Data
 
 *An experiment in guided synthetic history, Azure Functions, and Power BI*
-
+![Demo](./time-cycle.gif)
 ### Intro: Structured Synthetic Data in Practice
 
 Synthetic data gets attention for filling in gaps where real-world datasets fail but does it scale. The real question is: **Can a language model modify standardized tabular data cleanly enough to plug into an existing data model without breaking the architecture?**
